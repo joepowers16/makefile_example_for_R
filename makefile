@@ -41,7 +41,6 @@ REPORTS = my_report.html another_report.html
 
 # All targets
 all: $(DATA) $(REPORTS)
-.PHONY: all
 
 ##############################################################################
 ################################# MUNGE DATA #################################
