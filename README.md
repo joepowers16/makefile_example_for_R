@@ -1,14 +1,18 @@
 This project demonstrates the use of a makefile to coordinate data cleaning and analyis in R. Typical data projects have many dependencies between files. For instance a single R script could read in data from several csv files, run some code, and then output a plot or report. As R scripts grow long these dependencies often become hard to keep track of. For instance, a dataset may be changed at multiple points throughout a single long script, and the confused researcher loses track of what state their data was in at line 2005 of their code. 
 
-An alternative approach to a lengthy R script that cleans, merges, and analyzes your data is to modularize each step into smaller scripts that have clearly defined input and output. Makefiles explicitly coordinate these small scripts and their dependencies through `recipes`. The beauty of make is that recipes will only be executed when a prerequisite becomes newer than its target. In lay terms, this means that any time you change a script or dataset that your target depends on, the target will be rebuilt. And, every other recipe that uses that target as a prerequisite will also be rebuilt. That's so useful because if your data chagnes, you certainly want all plots and models that use that data to be updated, but updating everything after every change is a waste of time. 
+An alternative approach to a lengthy R script that cleans, merges, and analyzes your data is to modularize each step into smaller scripts that have clearly defined input and output. Makefiles explicitly coordinate these small scripts and their dependencies through `recipes`. 
+
+The beauty of make is that recipes will only be executed when a prerequisite becomes newer than its target. In lay terms, this means that any time you change a script or dataset that your target depends on, the target will be rebuilt. And, every other recipe that uses that target as a prerequisite will also be rebuilt. That's so useful because if your data chagnes, you certainly want all plots and models that use that data to be updated, but updating everything after every change is a waste of time. 
 
 Recipes take the form:
 
+```
 target: prerequisite_1 prerequisite_2 ... prerequisite_n  
 [tab] command_1  
 [tab] command_2  
 [tab] ...  
 [tab] command_n  
+```
 
 The `target` is a desired output, such as a file containing a dataset or report. A target from one recipe can become a prerequisite in another recipe. For instance, one recipe will generate clean data that is used in a later report. Those two actions should be accomplished in two recipes.
 
