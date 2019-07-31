@@ -26,4 +26,5 @@
 *.utf8.md
 *.knit.md
 
-
+# Files not ready to push
+under_dev/

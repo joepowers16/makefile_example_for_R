@@ -6,8 +6,8 @@
 ##############################################################################-
 
 # Packages, Parameters, & Data ####
-library(magrittr)
-library(tidyverse)
+suppressPackageStartupMessages(library(magrittr))
+suppressPackageStartupMessages(library(tidyverse))
 
 source(here::here("file_paths.R"))
 

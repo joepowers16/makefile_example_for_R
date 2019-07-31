@@ -40,7 +40,11 @@ If the targets were saved in different subdirectories the recipe could read:
 
 But as you will see in the example make file, you can set variables in Make that will eliminate the need to describe each target and prerequisite file path. 
 
-## A final note on script length 
+## Some useful tips
+### Avoiding clutter in your make log messages
+You can avoid a lot of clutter in your make log messages by using `suppressPackageStartupMessages(library(package_name))`
+
+### On script length 
 How long your script should be is a bit like asking how long a paragraph should be. There's no absolute answer, but if your paragraph is over a page long, it's probably accomplishing more than your reader can keep in mind. Same goes for scripts, because future you needs to be able to understand what your script was trying to accomplish. I try to keep my scripts to <80 characters wide and <100 lines, preferably 50 lines. 
 
 # References
