@@ -1,5 +1,5 @@
 ---
-title: "My report"
+title: "Another report"
 author: "Me"
 date: "7/30/2019"
 output: html_document
@@ -13,9 +13,13 @@ source(here::here("file_paths.R"))
 
 ```{r}
 ds_mtcars <- read_rds(file_ds_mtcars)
+ds_long_name_to_demo_line_breaks <- 
+	read_rds(file_ds_long_name_to_demo_line_breaks)
+ds_mt_agg <- read_rds(file_ds_mt_agg)
+ds_mtcars <- read_rds(file_ds_mtcars)
 ```
 
-```{r bar plot}
+```{r another bar plot}
 ds_mtcars %>% 
 	ggplot(aes(x = wt, y = mpg, color = am)) + 
 	geom_point() + 

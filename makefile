@@ -21,13 +21,10 @@ REP = ./cloud_makefile_example_for_R/reports
 # Search path
 VPATH = $(RAW) $(DAT) $(MUN) $(ANL) $(REP)
 
-# Command variables
-REND = Rscript -e "rmarkdown::render('$<')"
-
 # generate html report from Rmd file...
-RENDER = Rscript -e "rmarkdown::render('$<')" 
+REND = Rscript -e "rmarkdown::render('$<')" 
 # ... and move it to "reports" directory
-RENDREP = $(RENDER); mv $(<:.Rmd=.html) $(REP)
+RENDREP = $(REND); mv $(<:.Rmd=.html) $(REP)
 
 # run Rmd scripts without generating report
 KNIT = Rscript -e "knitr::knit('$<')" 
@@ -37,10 +34,10 @@ KNIT = Rscript -e "knitr::knit('$<')"
 ##############################################################################
 
 # Processed data files
-DATA = ds_mtcars.rds ds_mt_agg.rds
+DATA = ds_mtcars.rds ds_mt_agg.rds ds_long_name_to_demo_line_breaks.rds
 
 # Reports
-REPORTS = my_report.html
+REPORTS = my_report.html another_report.html
 
 # All targets
 all: $(DATA) $(REPORTS)
