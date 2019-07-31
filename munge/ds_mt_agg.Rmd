@@ -1,0 +1,40 @@
+---
+title: "Generate aggregated data for example"
+author: "Joseph Powers"
+date: "7/31/2019"
+output: html_document
+---
+
+```{r}
+# Packages, Parameters, & Data ####
+library(magrittr)
+library(tidyverse)
+
+breadcrumbs::source_file_paths()
+
+ds_mtcars <- read_rds(file_ds_mtcars)
+```
+
+```{r}
+# Munge ####
+ds_mt_agg <- 
+	ds_mtcars %>% 
+	group_by(cyl) %>% 
+  summarise(
+    mpg = mean(mpg),
+    wt = mean(wt),
+    mpg_sd = sd(mpg),
+    wt_sd = sd(wt)
+  ) %>% 
+	ungroup()
+```
+
+```{r}
+ds_mt_agg %>% 
+	ggplot(aes(x = cyl, y = mpg)) + 
+	geom_col()
+```
+
+```{r}
+write_rds(ds_mt_agg, file_ds_mt_agg)
+```

@@ -1,0 +1,24 @@
+---
+title: "my report"
+author: "Me"
+date: "7/30/2019"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+
+file_ds_mtcars <- here::here("cloud_make_example", "data", "ds_mtcars.rds")
+```
+
+```{r}
+ds_mtcars <- read_rds(file_ds_mtcars)
+```
+
+```{r}
+ds_mtcars %>% 
+	ggplot(aes(x = wt, y = mpg, color = am)) + 
+	geom_point() + 
+	geom_smooth()
+```
+
