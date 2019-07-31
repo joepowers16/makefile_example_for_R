@@ -1,5 +1,5 @@
 ---
-title: "my report"
+title: "My report"
 author: "Me"
 date: "7/30/2019"
 output: html_document
