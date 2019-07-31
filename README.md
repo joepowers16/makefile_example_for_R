@@ -21,7 +21,7 @@ If you are working in an RStudio project, go to Tools/Project Options and
 make sure that "Insert Spaces for Tab" is unchecked. If you are not working 
 in an Rproject, uncheck "Insert Spaces for Tab" from Tools/Global Options.
 
-A final note on script length: How long your script should be is a bit like asking how long a paragraph should be. There's no absolute answer, but if your paragraph is over a page long, it's probably accomplishing more than your read can keep in mind. Same goes for scripts, because future you needs to be able to understand what your script was trying to accomplish oth should accomplish. I try to keep my scripts to <80 characters wide and <100 lines, preferably 50 lines. 
+A final note on script length: How long your script should be is a bit like asking how long a paragraph should be. There's no absolute answer, but if your paragraph is over a page long, it's probably accomplishing more than your reader can keep in mind. Same goes for scripts, because future you needs to be able to understand what your script was trying to accomplish. I try to keep my scripts to <80 characters wide and <100 lines, preferably 50 lines. 
 
 # References
 https://www.gnu.org/software/make/manual/
