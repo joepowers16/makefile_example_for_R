@@ -4,11 +4,11 @@ An alternative approach to a lengthy R script that cleans, merges, and analyzes 
 
 Recipes take the form:
 
-target: prerequisite_1 prerequisite_2 ... prerequisite_n
-[tab] command_1
-[tab] command_2
-[tab] ...
-[tab] command_
+target: prerequisite_1 prerequisite_2 ... prerequisite_n  
+[tab] command_1  
+[tab] command_2  
+[tab] ...  
+[tab] command_n  
 
 The `target` is a desired output, such as a file containing a dataset or report. A target from one recipe can become a prerequisite in another recipe. For instance, one recipe will generate clean data that is used in a later report. Those two actions should be accomplished in two recipes.
 
