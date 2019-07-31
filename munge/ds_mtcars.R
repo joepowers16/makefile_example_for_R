@@ -9,7 +9,7 @@
 library(magrittr)
 library(tidyverse)
 
-breadcrumbs::source_file_paths()
+source(here::here("file_paths.R"))
 
 levels_am <- c("auto", "manual")
 levels_vs <- c("v", "s")

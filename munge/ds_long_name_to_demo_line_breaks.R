@@ -9,7 +9,9 @@
 library(magrittr)
 library(tidyverse)
 
-breadcrumbs::source_file_paths()
+source(here::here("file_paths.R"))
+
+ds_mtcars <- read_rds(file_ds_mtcars)
 
 # Munge ####
 ds_long <- 
