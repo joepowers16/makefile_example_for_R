@@ -3,7 +3,7 @@
 ## Script purpose: Makefile
 ## Date: 2019-07-29
 ## Author: Joe Powers 
-## NOTE: If you're new to makefiles, please see GLOSSARY at end of document and
+## NOTE: If you're new to makefiles, please see APPENDIX at end of document and
 ## and the README to get oriented.
 ##############################################################################-  
 
@@ -41,7 +41,6 @@ REPORTS = my_report.html another_report.html
 
 # All targets
 all: $(DATA) $(REPORTS)
-.PHONY: all
 
 ##############################################################################
 ################################# MUNGE DATA #################################
