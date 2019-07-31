@@ -390,11 +390,7 @@ $(document).ready(function () {
 <pre><code>## ── Conflicts ────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<<<<<<< HEAD
 <pre class="r"><code>source(here::here(&quot;file_paths.R&quot;))</code></pre>
-=======
-<pre class="r"><code>breadcrumbs::source_file_paths()</code></pre>
->>>>>>> 1972f01790093805c8d45f5363e515a5c5fd2881
 <pre class="r"><code>ds_mtcars &lt;- read_rds(file_ds_mtcars)
 ds_long_name_to_demo_line_breaks &lt;- 
     read_rds(file_ds_long_name_to_demo_line_breaks)

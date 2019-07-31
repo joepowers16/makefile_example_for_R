@@ -21,11 +21,27 @@ The `prerequisites` are the data and scripts that generate a target. Prerequisit
 The `commands` are shell commands that coordinate the prerequisites in order to create the target. The command section in most of my recipes is one item long, and executes the first prerequisite, which is usually a script. 
 
 `Commands` must be indented with *tabs* and not *spaces*. 
-If you are working in an RStudio project, go to Tools/Project Options and 
+If you are working in an RStudio project, go to `Tools/Project Options` and 
 make sure that "Insert Spaces for Tab" is unchecked. If you are not working 
-in an Rproject, uncheck "Insert Spaces for Tab" from Tools/Global Options.
+in an Rproject, uncheck "Insert Spaces for Tab" from `Tools/Global Options`.
 
-A final note on script length: How long your script should be is a bit like asking how long a paragraph should be. There's no absolute answer, but if your paragraph is over a page long, it's probably accomplishing more than your reader can keep in mind. Same goes for scripts, because future you needs to be able to understand what your script was trying to accomplish. I try to keep my scripts to <80 characters wide and <100 lines, preferably 50 lines. 
+A real example of a make recipe could read: 
+
+```
+my_report.html: my_report.Rmd ds_mtcars.rds
+	Rscript -e "rmarkdown::render('$<')" 
+```
+
+If the targets were saved in different subdirectories the recipe could read:
+```
+./analyis/my_report.html: ./analyis/my_report.Rmd ./data/ds_mtcars.rds
+	Rscript -e "rmarkdown::render('$<')"
+```
+
+But as you will see in the example make file, you can set variables in Make that will eliminate the need to describe each target and prerequisite file path. 
+
+## A final note on script length 
+How long your script should be is a bit like asking how long a paragraph should be. There's no absolute answer, but if your paragraph is over a page long, it's probably accomplishing more than your reader can keep in mind. Same goes for scripts, because future you needs to be able to understand what your script was trying to accomplish. I try to keep my scripts to <80 characters wide and <100 lines, preferably 50 lines. 
 
 # References
 [GNU Make Manual](https://www.gnu.org/software/make/manual/)  
