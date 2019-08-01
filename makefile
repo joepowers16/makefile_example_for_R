@@ -40,12 +40,15 @@ DATA = ds_mtcars.rds ds_mt_agg.rds ds_long_name_to_demo_line_breaks.rds
 REPORTS = my_report.html another_report.html
 
 # Phony Targets are any targets that don't represent single files
-.Phony: all clean
+.Phony: all clean clobber
 
 all: $(DATA) $(REPORTS)
 
 clean: 
 	rm -f $(REP)/*
+	
+clobber: 
+	rm -f $(REP)/* $(DAT)/*.rds
 	
 ##############################################################################
 ################################# MUNGE DATA #################################
