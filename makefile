@@ -39,9 +39,14 @@ DATA = ds_mtcars.rds ds_mt_agg.rds ds_long_name_to_demo_line_breaks.rds
 # Reports
 REPORTS = my_report.html another_report.html
 
-# All targets
+# Phony Targets are any targets that don't represent single files
+.Phony: all clean
+
 all: $(DATA) $(REPORTS)
 
+clean: 
+	rm -f $(REP)/*
+	
 ##############################################################################
 ################################# MUNGE DATA #################################
 ##############################################################################
@@ -57,6 +62,9 @@ ds_mt_agg.rds: ds_mt_agg.Rmd ds_mtcars.rds
 	
 ds_long_name_to_demo_line_breaks.rds: ds_long_name_to_demo_line_breaks.R \
 ds_mtcars.rds
+	Rscript $<
+
+ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds
 	Rscript $<
 	
 ##############################################################################
