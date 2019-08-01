@@ -28,3 +28,7 @@
 
 # Files not ready to push
 under_dev/
+
+# large files
+*.md
+*.html
