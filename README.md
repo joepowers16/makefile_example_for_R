@@ -49,15 +49,32 @@ How long your script should be is a bit like asking how long a paragraph should 
 
 # References
 [GNU Make Manual](https://www.gnu.org/software/make/manual/)  
+
 [Broman, Minimal Make](https://kbroman.org/minimal_make/)  
-[A Short Introduction to Makefile](https://www3.nd.edu/~zxu2/acms60212-40212/Makefile.pdf)  
+
+[A Short Introduction to Makefile](https://www3.nd.edu/~zxu2/acms60212-40212/Makefile.pdf) 
+
 [Phony Targets](https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html#Phony-Targets)
+
+[Rules of Makefiles](http://make.mad-scientist.net/papers/rules-of-makefiles/)
+
+[Makefile Style Guide](http://clarkgrubb.com/makefile-style-guide#intermediate-targets)
+
+[Makefile video](https://youtu.be/Lyp36ku7D0A)
+
+[SWcarpentry Make](https://swcarpentry.github.io/make-novice/)
 
 ## From https://lincolnmullen.com/projects/dh-r2/reproducible.html: 
 Christopher Gandrud, Reproducible Research with R and RStudio (Chapman and Hall, 2013).
-Though intended for scientists, see [Karl Broman’s short course on Tools for Reproducible Research](http://kbroman.org/Tools4RR/).
+
+Though intended for scientists, see [Karl Broman’s short course on Tools for Reproducible Research](http://kbroman.org/Tools4RR/).  
+
 [CRAN Task View: Reproducible Research lists other packages relevant to reproducible research and literate programming.](http://cran.r-project.org/web/views/ReproducibleResearch.html)
-Yihui Xie, Dynamic Documents with R and knitr (Chapman and Hall, 2013).
+
+Yihui Xie, Dynamic Documents with R and knitr (Chapman and Hall, 2013). 
+
 Manual for GNU Make
+
 [Mike Bostock, “Why Use Make”](http://bost.ocks.org/mike/make/)
-Boettiger, Carl. “An Introduction to Docker for Reproducible Research, with Examples from the R Environment.” arXiv:1410.0846 [cs], October 2, 2014. http://arxiv.org/abs/1410.0846.
+
+[Boettiger, Carl. “An Introduction to Docker for Reproducible Research, with Examples from the R Environment.” arXiv:1410.0846, October 2, 2014](http://arxiv.org/abs/1410.0846). 
