@@ -2,7 +2,6 @@
 title: "Generate aggregated data for example"
 author: "Joseph Powers"
 date: "7/31/2019"
-output: html_document
 ---
 
 ```{r}
@@ -21,17 +20,17 @@ ds_mt_agg <-
 	ds_mtcars %>% 
 	group_by(cyl) %>% 
   summarise(
-    mpg = mean(mpg),
-    wt = mean(wt),
+    mpg_mn = mean(mpg),
+    wt_mn = mean(wt),
     mpg_sd = sd(mpg),
     wt_sd = sd(wt)
   ) %>% 
 	ungroup()
 ```
 
-```{r}
-ds_mt_agg %>% 
-	ggplot(aes(x = cyl, y = mpg)) + 
+```{r random bar plot, eval=FALSE}
+ds_mt_agg %>%
+	ggplot(aes(x = cyl, y = mpg_mn)) + 
 	geom_col()
 ```
 
