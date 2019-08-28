@@ -12,17 +12,9 @@ suppressPackageStartupMessages(library(tidyverse))
 source(here::here("file_paths.R"))
 
 ds_mtcars <- read_rds(file_ds_mtcars)
+ds_mt_agg <- read_rds(file_ds_mt_agg)
 
 # Munge ####
-ds_mt_temp <- 
-	ds_mtcars %>% 
-	group_by(cyl) %>% 
-	summarise(
-		mpg = mean(mpg),
-		wt = mean(wt),
-		mpg_sd = sd(mpg),
-		wt_sd = sd(wt)
-	) %>% 
-	ungroup()
+ds_mt_temp <- left_join(ds_mtcars, ds_mt_agg, by = "cyl")
 
 write_rds(ds_mt_temp, file_ds_mt_temp)
