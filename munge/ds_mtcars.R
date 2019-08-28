@@ -22,7 +22,7 @@ glimpse(ds_mtcars)
 ds_mtcars %<>% 
   mutate(
     am = factor(am, labels = levels_am), 
-    vs = factor(vs, labels = levels_vs, levels = levels_vs)
+    vs = factor(vs, labels = levels_vs)
   )
 
 write_rds(ds_mtcars, file_ds_mtcars)
