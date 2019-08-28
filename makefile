@@ -12,43 +12,45 @@
 ##############################################################################
 
 # define project subdirectories
+PROJECT = ./
 RAW = ./cloud_makefile_example_for_R/data/raw
 DAT = ./cloud_makefile_example_for_R/data
 MUN = ./munge
 ANL = ./analysis
 REP = ./cloud_makefile_example_for_R/reports
+INT = $(DAT)/intermediate
 
 # Search path
-VPATH = $(RAW) $(DAT) $(MUN) $(ANL) $(REP)
+VPATH = $(RAW) $(DAT) $(INT) $(MUN) $(ANL) $(REP) $(PROJECT)
 
 # generate html report from Rmd file...
-REND = Rscript -e "rmarkdown::render('$<')" 
+RENDER = Rscript -e "rmarkdown::render('$<')" 
 # ... and move it to "reports" directory
-RENDREP = $(REND); mv $(<:.Rmd=.html) $(REP)
+RENDER_MV_REP = $(RENDER); mv $(<:.Rmd=.html) $(REP)
 
-# run Rmd scripts without generating report
-KNIT = Rscript -e "knitr::knit('$<')" 
-
+# run Rmd scripts without saving report
+SOURCE_RMD_NO_REPORT = Rscript -e "knitr::knit('$<')"; rm $(<F:.Rmd=.md)
 ##############################################################################
 ############################## LIST OF TARGETS ###############################
 ##############################################################################
 
 # Processed data files
-DATA = ds_mtcars.rds ds_mt_agg.rds ds_long_name_to_demo_line_breaks.rds
+DATA_TARGETS = ds_mtcars.rds ds_mt_agg.rds ds_mt_temp.rds \
+ds_long_name_to_demo_line_breaks.rds
 
 # Reports
-REPORTS = my_report.html another_report.html
+REPORT_TARGETS = my_report.html another_report.html
 
 # Phony Targets are any targets that don't represent single files
 .Phony: all clean clobber
 
-all: $(DATA) $(REPORTS)
+all: $(DATA_TARGETS) $(REPORT_TARGETS)
 
 clean: 
 	rm -f $(REP)/*
 	
 clobber: 
-	rm -f $(REP)/* $(DAT)/*.rds
+	rm -f $(REP)/*.html $(DAT)/*.rds $(INT)/*.rds
 	
 ##############################################################################
 ################################# MUNGE DATA #################################
@@ -59,15 +61,15 @@ ds_mt_raw.csv: ds_mt_raw.R
 	
 ds_mtcars.rds: ds_mtcars.R ds_mt_raw.csv
 	Rscript $<
-	
+
 ds_mt_agg.rds: ds_mt_agg.Rmd ds_mtcars.rds
-	$(KNIT)
+	$(SOURCE_RMD_NO_REPORT)
 	
-ds_long_name_to_demo_line_breaks.rds: ds_long_name_to_demo_line_breaks.R \
-ds_mtcars.rds
+ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds ds_mt_agg.rds
 	Rscript $<
 
-ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds
+ds_long_name_to_demo_line_breaks.rds: ds_long_name_to_demo_line_breaks.R \
+ds_mtcars.rds
 	Rscript $<
 	
 ##############################################################################
@@ -75,11 +77,11 @@ ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds
 ##############################################################################
 
 my_report.html: my_report.Rmd ds_mtcars.rds
-	$(RENDREP)
+	$(RENDER_MV_REP)
 	
 another_report.html: another_report.Rmd ds_long_name_to_demo_line_breaks.rds \
-ds_mt_agg.rds ds_mtcars.rds
-	$(RENDREP)
+ds_mt_temp.rds
+	$(RENDER_MV_REP)
 
 ##############################################################################
 ################################# APPENDIX ###################################
@@ -123,8 +125,29 @@ ds_mt_agg.rds ds_mtcars.rds
 # ... and `variables` are called like this 
 # $(VARNAME)
 # 
-# The special variable `VPATH` saves the search paths through which make should search for 
-# your target, prerequisite, and command files. 
+# The special variable `VPATH` saves the search paths through which make should 
+# search for your target, prerequisite, and command files. 
 
 # `Rscript` will execute an R script
-# `$<` is a wildcard that refers to the first prerequisite in the recipe
+
+# Useful automatic variables:
+# $@       the file name of the target
+# $<       the name of the first prerequisite 
+# $^       the names of all prerequisites 
+# $(@D)    the directory part of the target
+# $(@F)    the file part of the target
+# $(<D)    the directory part of the first prerequisite 
+# $(<F)    the file part of the first prerequisite 
+
+# Using these automatic variables, you can refer to files that don't yet exist: 
+# For instance in the following recipe I can use $(<F) to refer to  and remove
+# demo.md, a file that results from knitr::knit() that I have no use for: 
+
+# demo.rds: demo.Rmd raw.rds
+#		Rscript -e "knitr::knit('$<')"
+#		rm $(<F:.Rmd=.md)
+
+# $(<F:.Rmd=.md) will be evaluated as "demo.md" because $(<F) will return the 
+# file name of the first prerequisite, "demo.Rmd", as a string, and ":.Rmd=.md" 
+# will edit the string "demo.Rmd" to become "demo.md", so that rm $(<F:.Rmd=.md)
+# will be evaluated as "rm demo.md"
