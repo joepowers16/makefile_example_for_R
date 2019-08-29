@@ -54,6 +54,8 @@ How long your script should be is a bit like asking how long a paragraph should 
 
 [A Short Introduction to Makefile](https://www3.nd.edu/~zxu2/acms60212-40212/Makefile.pdf) 
 
+[swcarpentry](https://swcarpentry.github.io/make-novice/)
+
 [Phony Targets](https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html#Phony-Targets)
 
 [Rules of Makefiles](http://make.mad-scientist.net/papers/rules-of-makefiles/)
