@@ -131,9 +131,9 @@ ds_mt_temp.rds
 # `Rscript` will execute an R script
 
 # Useful automatic variables:
-# $@       the file name of the target
+# $@       the name of the target
 # $<       the name of the first prerequisite 
-# $^       the names of all prerequisites 
+# $^       the names of all prerequisites of current rule
 # $(@D)    the directory part of the target
 # $(@F)    the file part of the target
 # $(<D)    the directory part of the first prerequisite 
