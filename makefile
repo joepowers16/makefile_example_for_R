@@ -29,8 +29,7 @@ RENDER = Rscript -e "rmarkdown::render('$<')"
 RENDER_TO_REPORTS = $(RENDER); mv $(<:.Rmd=.html) $(REP)
 
 # run Rmd scripts without saving report
-SOURCE_RMD_NO_REPORT = Rscript -e 'rmarkdown::render(
-input = "$<", output_options = list(html_preview = FALSE))'
+SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
 ##############################################################################
 ############################## LIST OF TARGETS ###############################
 ##############################################################################
