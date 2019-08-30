@@ -26,10 +26,11 @@ VPATH = $(RAW) $(DAT) $(INT) $(MUN) $(ANL) $(REP) $(PROJECT)
 # generate html report from Rmd file...
 RENDER = Rscript -e "rmarkdown::render('$<')" 
 # ... and move it to "reports" directory
-RENDER_MV_REP = $(RENDER); mv $(<:.Rmd=.html) $(REP)
+RENDER_TO_REPORTS = $(RENDER); mv $(<:.Rmd=.html) $(REP)
 
 # run Rmd scripts without saving report
-SOURCE_RMD_NO_REPORT = Rscript -e "knitr::knit('$<')"; rm $(<F:.Rmd=.md)
+SOURCE_RMD_NO_REPORT = Rscript -e 'rmarkdown::render(
+input = "$<", output_options = list(html_preview = FALSE))'
 ##############################################################################
 ############################## LIST OF TARGETS ###############################
 ##############################################################################
@@ -77,12 +78,12 @@ ds_mtcars.rds
 ##############################################################################
 
 my_report.html: my_report.Rmd ds_mtcars.rds
-	$(RENDER_MV_REP)
+	$(RENDER_TO_REPORTS)
 	
 another_report.html: another_report.Rmd ds_long_name_to_demo_line_breaks.rds \
 ds_mt_temp.rds
-	$(RENDER_MV_REP)
-
+	$(RENDER_TO_REPORTS)
+	
 ##############################################################################
 ################################# APPENDIX ###################################
 ##############################################################################
