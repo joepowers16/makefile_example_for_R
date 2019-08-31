@@ -56,30 +56,32 @@ clobber:
 ##############################################################################
 
 ds_mt_raw.csv: ds_mt_raw.R
-	Rscript $<
 	
 ds_mtcars.rds: ds_mtcars.R ds_mt_raw.csv
-	Rscript $<
 
 ds_mt_agg.rds: ds_mt_agg.Rmd ds_mtcars.rds
-	$(SOURCE_RMD_NO_REPORT)
 	
 ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds ds_mt_agg.rds
-	Rscript $<
 
 ds_long_name_to_demo_line_breaks.rds: ds_long_name_to_demo_line_breaks.R \
 ds_mtcars.rds
-	Rscript $<
 	
 ##############################################################################
 ################################## ANALYSIS ##################################
 ##############################################################################
 
 my_report.html: my_report.Rmd ds_mtcars.rds
-	$(RENDER_MV_REP)
 	
 another_report.html: another_report.Rmd ds_long_name_to_demo_line_breaks.rds \
 ds_mt_temp.rds
+
+%.rds: %.R 
+	Rscript $<
+
+%.rds: %.Rmd 
+	$(SOURCE_RMD_NO_REPORT)
+
+%.html: %.Rmd 
 	$(RENDER_MV_REP)
 
 ##############################################################################
