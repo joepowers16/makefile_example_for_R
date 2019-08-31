@@ -18,7 +18,6 @@ DAT = ./cloud_makefile_example_for_R/data
 MUN = ./munge
 ANL = ./analysis
 REP = ./cloud_makefile_example_for_R/reports
-INT = $(DAT)/intermediate
 
 # Search path
 VPATH = $(RAW) $(DAT) $(INT) $(MUN) $(ANL) $(REP) $(PROJECT)
@@ -35,7 +34,7 @@ SOURCE_RMD_NO_REPORT = Rscript -e "knitr::knit('$<')"; rm $(<F:.Rmd=.md)
 ##############################################################################
 
 # Processed data files
-DATA_TARGETS = ds_mtcars.rds ds_mt_agg.rds ds_mt_temp.rds \
+DATA_TARGETS = ds_mt_raw.csv ds_mtcars.rds ds_mt_agg.rds ds_mt_temp.rds \
 ds_long_name_to_demo_line_breaks.rds
 
 # Reports
@@ -50,7 +49,7 @@ clean:
 	rm -f $(REP)/*
 	
 clobber: 
-	rm -f $(REP)/*.html $(DAT)/*.rds $(INT)/*.rds
+	rm -f $(REP)/*.html $(DAT)/*.rds 
 	
 ##############################################################################
 ################################# MUNGE DATA #################################
