@@ -7,5 +7,5 @@ output: html_document
 
 ```{r}
 source(here::here("file_paths.R"))
-write_rds(mtcars, file_ds_mt_agg)
+saveRDS(mtcars, file_ds_mt_agg)
 ```
