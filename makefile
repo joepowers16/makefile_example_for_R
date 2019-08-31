@@ -12,23 +12,24 @@
 ##############################################################################
 
 # define project subdirectories
-PROJECT = ./
-RAW = ./cloud_makefile_example_for_R/data/raw
-DAT = ./cloud_makefile_example_for_R/data
-MUN = ./munge
-ANL = ./analysis
-REP = ./cloud_makefile_example_for_R/reports
+DIR_PROJECT = ./
+DIR_MUNGE = ./munge
+DIR_ANALYSIS = ./analysis
+DIR_CLOUD = ./cloud_makefile_example_for_R
+DIR_DATA = $(DIR_CLOUD)/data
+DIR_RAW = $(DIR_DATA)/raw
+DIR_REPORTS = $(DIR_CLOUD)/reports
 
 # Search path
-VPATH = $(RAW) $(DAT) $(INT) $(MUN) $(ANL) $(REP) $(PROJECT)
+VPATH = $(DIR_RAW) $(DIR_DATA) $(DIR_MUNGE) $(DIR_ANALYSIS) $(DIR_REPORTS) $(DIR_PROJECT)
 
 # generate html report from Rmd file...
 RENDER = Rscript -e "rmarkdown::render('$<')" 
 # ... and move it to "reports" directory
-RENDER_MV_REP = $(RENDER); mv $(<:.Rmd=.html) $(REP)
+RENDER_TO_REPORTS = $(RENDER); mv $(<:.Rmd=.html) $(DIR_REPORTS)
 
 # run Rmd scripts without saving report
-SOURCE_RMD_NO_REPORT = Rscript -e "knitr::knit('$<')"; rm $(<F:.Rmd=.md)
+SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
 ##############################################################################
 ############################## LIST OF TARGETS ###############################
 ##############################################################################
@@ -46,43 +47,41 @@ REPORT_TARGETS = my_report.html another_report.html
 all: $(DATA_TARGETS) $(REPORT_TARGETS)
 
 clean: 
-	rm -f $(REP)/*
+	rm -f $(DIR_REPORTS)/*
 	
 clobber: 
-	rm -f $(REP)/*.html $(DAT)/*.rds 
+	rm -f $(DIR_REPORTS)/*.html $(DIR_DATA)/*.rds 
 	
 ##############################################################################
 ################################# MUNGE DATA #################################
 ##############################################################################
 
 ds_mt_raw.csv: ds_mt_raw.R
+	Rscript $<
 	
 ds_mtcars.rds: ds_mtcars.R ds_mt_raw.csv
-
+	Rscript $<
+	
 ds_mt_agg.rds: ds_mt_agg.Rmd ds_mtcars.rds
+	$(SOURCE_RMD_NO_REPORT)
 	
 ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds ds_mt_agg.rds
-
+	Rscript $<
+	
 ds_long_name_to_demo_line_breaks.rds: ds_long_name_to_demo_line_breaks.R \
 ds_mtcars.rds
+	Rscript $<
 	
 ##############################################################################
 ################################## ANALYSIS ##################################
 ##############################################################################
 
 my_report.html: my_report.Rmd ds_mtcars.rds
+	$(RENDER_TO_REPORTS)
 	
 another_report.html: another_report.Rmd ds_long_name_to_demo_line_breaks.rds \
 ds_mt_temp.rds
-
-%.rds: %.R 
-	Rscript $<
-
-%.rds: %.Rmd 
-	$(SOURCE_RMD_NO_REPORT)
-
-%.html: %.Rmd 
-	$(RENDER_MV_REP)
+	$(RENDER_TO_REPORTS)
 
 ##############################################################################
 ################################# APPENDIX ###################################
