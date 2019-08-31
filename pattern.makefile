@@ -18,7 +18,6 @@ DAT = ./cloud_makefile_example_for_R/data
 MUN = ./munge
 ANL = ./analysis
 REP = ./cloud_makefile_example_for_R/reports
-INT = $(DAT)/intermediate
 
 # Search path
 VPATH = $(RAW) $(DAT) $(INT) $(MUN) $(ANL) $(REP) $(PROJECT)
@@ -59,7 +58,7 @@ ds_mt_raw.csv: ds_mt_raw.R
 	
 ds_mtcars.rds: ds_mtcars.R ds_mt_raw.csv
 
-ds_mt_agg.rds: ds_mt_agg.Rmd ds_mtcars.rds
+ds_mt_agg.rds: ds_mt_agg.Rmd 
 	
 ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds ds_mt_agg.rds
 
@@ -83,7 +82,7 @@ ds_mt_temp.rds
 	Rscript $<
 	
 %.rds: %.Rmd
-	$(RENDER_TO_REPORTS)
+	$(SOURCE_RMD_NO_REPORT)
 	
 %.html: %.Rmd 
 	$(RENDER_TO_REPORTS)
