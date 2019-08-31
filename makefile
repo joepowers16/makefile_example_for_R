@@ -35,7 +35,7 @@ SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
 ##############################################################################
 
 # Processed data files
-DATA_TARGETS = ds_mt_raw.csv ds_mtcars.rds ds_mt_agg.rds ds_mt_temp.rds \
+DATA_TARGETS = ds_mtcars.rds ds_mt_agg.rds ds_mt_temp.rds \
 ds_long_name_to_demo_line_breaks.rds
 
 # Reports
@@ -56,9 +56,6 @@ clobber:
 ##############################################################################
 ################################# MUNGE DATA #################################
 ##############################################################################
-
-ds_mt_raw.csv: ds_mt_raw.R
-	Rscript $<
 	
 ds_mtcars.rds: ds_mtcars.R ds_mt_raw.csv
 	Rscript $<
