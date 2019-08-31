@@ -18,7 +18,6 @@ DAT = ./cloud_makefile_example_for_R/data
 MUN = ./munge
 ANL = ./analysis
 REP = ./cloud_makefile_example_for_R/reports
-INT = $(DAT)/intermediate
 
 # Search path
 VPATH = $(RAW) $(DAT) $(INT) $(MUN) $(ANL) $(REP) $(PROJECT)
