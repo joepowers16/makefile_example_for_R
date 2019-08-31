@@ -12,7 +12,7 @@ source(here::here("file_paths.R"))
 ```
 
 ```{r}
-ds_mtcars <- read_rds(file_ds_mtcars)
+ds_mtcars <- mtcars
 ```
 
 ```{r bar plot}
