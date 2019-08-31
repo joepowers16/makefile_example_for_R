@@ -45,7 +45,7 @@ REPORT_TARGETS = my_report.html another_report.html
 all: $(DATA_TARGETS) $(REPORT_TARGETS)
 
 clean: 
-	rm -f $(REP)/*.rds
+	rm -f $(REP)/*.html
 	
 clobber: 
 	rm -f $(REP)/*.html $(DAT)/*.rds
@@ -60,7 +60,7 @@ ds_mt_raw.csv: ds_mt_raw.R
 ds_mtcars.rds: ds_mtcars.R ds_mt_raw.csv
 	Rscript $<
 
-ds_mt_agg.rds: ds_mt_agg.Rmd ds_mtcars.rds
+ds_mt_agg.rds: ds_mt_agg.Rmd 
 	$(SOURCE_RMD_NO_REPORT)
 	
 ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds ds_mt_agg.rds
