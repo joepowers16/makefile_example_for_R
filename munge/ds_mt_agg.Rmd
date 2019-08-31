@@ -2,6 +2,7 @@
 title: "Generate aggregated data for example"
 author: "Joseph Powers"
 date: "7/31/2019"
+output: html_document
 ---
 
 ```{r}
@@ -26,12 +27,6 @@ ds_mt_agg <-
     wt_sd = sd(wt)
   ) %>% 
 	ungroup()
-```
-
-```{r random bar plot, eval=FALSE}
-ds_mt_agg %>%
-	ggplot(aes(x = cyl, y = mpg_mn)) + 
-	geom_col()
 ```
 
 ```{r}
