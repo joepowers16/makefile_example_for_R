@@ -1,4 +1,29 @@
-This project demonstrates the use of a makefile to coordinate data cleaning and analyis in R. Typical data projects have many dependencies between files. For instance a single R script could read in data from several csv files, run some code, and then output a plot or report. As R scripts grow long these dependencies often become hard to keep track of. For instance, a dataset may be changed at multiple points throughout a single long script, and the confused researcher loses track of what state their data was in at line 2005 of their code. 
+# Title: The why and how of makefiles
+# Date: 2019-08-30
+# Author: Joseph T. Powers
+
+# TL;DR
+Long scripts are fragile, hard to understand, and harder to maintain. Makefiles can coordinate many small scripts. 
+
+# Quick Demo of Make
+For a full demonstration of a makefile in use, clone or download this repo and navigate your terminal to whereever you saved this project directory. For me this meant typing into my terminal: 
+
+```
+$cd /Users/joepowers/Documents/personal_coding/makefile_example_for_R
+```
+
+Then execute the following commands in your terminal and watch all the files get executed. 
+
+```
+$make clean
+$make clobber
+$make
+```
+
+Save a meaningless change to the script "munge/ds_mt_temp.R" and execute `make` again. Notice that only recipes the depend on "ds_mt_temp.R" get rebuilt. Nice, isn't it?
+
+# The why and how of makefiles
+This project demonstrates the use of a makefile to coordinate data cleaning and analyis in R. Typical data projects have many dependencies between files. For instance a large R script could read in data from several csv files, run some code, and then output a plot or report. As R scripts grow long the internal dependencies often become hard to keep track of. For instance, a dataset may be changed at multiple points throughout a single long script, and the confused researcher loses track of what state their data was in at line 2005 of their 5000 line script. 
 
 An alternative approach to a lengthy R script that cleans, merges, and analyzes your data is to modularize each step into smaller scripts that have clearly defined input and output. Makefiles explicitly coordinate these small scripts and their dependencies through `recipes`. 
 
