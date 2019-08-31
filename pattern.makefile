@@ -23,13 +23,12 @@ INT = $(DAT)/intermediate
 # Search path
 VPATH = $(RAW) $(DAT) $(INT) $(MUN) $(ANL) $(REP) $(PROJECT)
 
-# generate html report from Rmd file...
+# generate report from Rmd file
 RENDER = Rscript -e "rmarkdown::render('$<')" 
-# ... and move it to "reports" directory
-RENDER_TO_REPORTS_DIR = $(RENDER); mv $(<:.Rmd=.html) $(REP)
-
-# run Rmd scripts without saving report
-SOURCE_RMD_NO_REPORT = Rscript -e "knitr::knit('$<')"
+# generate report from Rmd file and move report to "reports" directory
+RENDER_TO_REPORTS = $(RENDER); mv $(<:.Rmd=.html) $(REP)
+# execute Rmd script without generating report
+SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
 ##############################################################################
 ############################## LIST OF TARGETS ###############################
 ##############################################################################
@@ -84,10 +83,10 @@ ds_mt_temp.rds
 	Rscript $<
 	
 %.rds: %.Rmd
-	$(SOURCE_RMD_NO_REPORT)
+	$(RENDER_TO_REPORTS)
 	
 %.html: %.Rmd 
-	$(RENDER_TO_REPORTS_DIR)
+	$(RENDER_TO_REPORTS)
 
 ##############################################################################
 ################################# APPENDIX ###################################
