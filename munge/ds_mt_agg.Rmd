@@ -6,29 +6,5 @@ output: html_document
 ---
 
 ```{r}
-# Packages, Parameters, & Data ####
-suppressPackageStartupMessages(library(magrittr))
-suppressPackageStartupMessages(library(tidyverse))
-
-source(here::here("file_paths.R"))
-
-ds_mtcars <- read_rds(file_ds_mtcars)
-```
-
-```{r}
-# Munge ####
-ds_mt_agg <- 
-	ds_mtcars %>% 
-	group_by(cyl) %>% 
-  summarise(
-    mpg_mn = mean(mpg),
-    wt_mn = mean(wt),
-    mpg_sd = sd(mpg),
-    wt_sd = sd(wt)
-  ) %>% 
-	ungroup()
-```
-
-```{r}
-write_rds(ds_mt_agg, file_ds_mt_agg)
+write_rds(mtcars, file_ds_mt_agg)
 ```
