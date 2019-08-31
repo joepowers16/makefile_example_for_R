@@ -47,10 +47,11 @@ REPORT_TARGETS = my_report.html another_report.html
 all: $(DATA_TARGETS) $(REPORT_TARGETS)
 
 clean: 
-	rm -f $(DIR_REPORTS)/*
+	rm -f $(addprefix $(DIR_REPORTS)/, $(REPORT_TARGETS))
 	
 clobber: 
-	rm -f $(DIR_REPORTS)/*.html $(DIR_DATA)/*.rds 
+	rm -f $(addprefix $(DIR_REPORTS)/, $(REPORT_TARGETS)) \
+		$(addprefix $(DIR_DATA)/, $(DATA_TARGETS))
 	
 ##############################################################################
 ################################# MUNGE DATA #################################
