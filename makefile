@@ -27,8 +27,7 @@ VPATH = $(DIR_RAW) $(DIR_DATA) $(DIR_MUNGE) $(DIR_ANALYSIS) $(DIR_REPORTS) $(DIR
 RENDER = Rscript -e "rmarkdown::render('$<')" 
 # ... and move it to "reports" directory
 RENDER_TO_REPORTS = $(RENDER); mv $(<:.Rmd=.html) $(DIR_REPORTS)
-
-# run Rmd scripts without saving report
+# execute Rmd file without generating report
 SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
 ##############################################################################
 ############################## LIST OF TARGETS ###############################
