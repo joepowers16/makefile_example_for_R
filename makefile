@@ -20,7 +20,8 @@ DIR_RAW = $(DIR_DATA)/raw
 DIR_REPORTS = ./reports
 
 # Search path
-VPATH = $(DIR_RAW) $(DIR_DATA) $(DIR_MUNGE) $(DIR_ANALYSIS) $(DIR_REPORTS) $(DIR_PROJECT)
+VPATH = $(DIR_RAW) $(DIR_DATA) $(DIR_MUNGE) $(DIR_ANALYSIS) $(DIR_REPORTS) \
+$(DIR_PROJECT)
 
 # generate html report from Rmd file
 RENDER = Rscript -e "rmarkdown::render('$<')" 
