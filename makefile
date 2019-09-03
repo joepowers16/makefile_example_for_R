@@ -15,16 +15,20 @@
 DIR_PROJECT = ./
 DIR_DATA = ./data
 DIR_RAW = $(DIR_DATA)/raw
+DIR_MUNGE = ./munge
 DIR_REPORTS = ./reports
+DIR_ANALYSIS = ./analysis
 
 # Search path
-VPATH = $(DIR_PROJECT) $(DATA) $(DIR_RAW)
+VPATH = $(DIR_PROJECT) $(DIR_DATA) $(DIR_MUNGE) $(DIR_RAW) $(DIR_ANALYSIS) \
+$(DIR_REPORTS)
 
 # generate html report from Rmd file
 RENDER = Rscript -e "rmarkdown::render('$<')" 
 # generate html report from Rmd file and move it to "reports" directory
 RENDER_TO_REPORTS = $(RENDER); mv $(<:.Rmd=.html) $(DIR_REPORTS)
 
+SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
 ##############################################################################
 ############################## LIST OF TARGETS ###############################
 ##############################################################################
@@ -51,7 +55,7 @@ report.html:
 	Rscript $<
 
 %.rds: %.Rmd 
-	Rscript -e 'knitr::knit("$<", output = tempfile())'
+	$(SOURCE_RMD_NO_REPORT)
 	
 %.html: %.Rmd
 	$(RENDER_TO_REPORTS)
