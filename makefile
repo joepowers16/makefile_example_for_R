@@ -24,15 +24,18 @@ VPATH = $(PROJECT)
 # Phony Targets are any targets that don't represent single files
 .Phony: all clean
 
-all: ds_mt_agg.rds
+all: ds_mt_agg.rds ds_mt.rds
 
 clean: 
-	rm -f ds_mt_agg.rds
+	rm -f ds_mt_agg.rds ds_mt.rds
 	
+ds_mt.rds: 
+
 ds_mt_agg.rds: 
+
+%.rds: %.R 
+	Rscript -e $<
 
 %.rds: %.Rmd 
 	Rscript -e 'knitr::knit("$<", output = tempfile())'
-	
-
 	
