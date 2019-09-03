@@ -23,9 +23,9 @@ DIR_REPORTS = $(DIR_CLOUD)/reports
 # Search path
 VPATH = $(DIR_RAW) $(DIR_DATA) $(DIR_MUNGE) $(DIR_ANALYSIS) $(DIR_REPORTS) $(DIR_PROJECT)
 
-# generate html report from Rmd file...
+# generate html report from Rmd file
 RENDER = Rscript -e "rmarkdown::render('$<')" 
-# ... and move it to "reports" directory
+# generate html report from Rmd file and move it to "reports" directory
 RENDER_TO_REPORTS = $(RENDER); mv $(<:.Rmd=.html) $(DIR_REPORTS)
 # execute Rmd file without generating report
 SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
@@ -85,37 +85,38 @@ ds_mt_temp.rds
 ##############################################################################
 
 # You can execute this makefile from any computer that has make installed 
-# (i.e., every Mac or Unix machine) simply by changing your working directory 
-# to the directory containing this makefile and typing "make" in the terminal. 
+# (i.e., every Mac or Unix machine) simply by typing "make" in the terminal
+# when your working directory is set to this directory. 
 
-# Makefiles explicitly coordinate file dependencies through `recipes`. 
+# Makefiles explicitly coordinate file dependencies through `rules`. 
 
-# Recipes take the form:
+# Rules take the form:
 
 # target: prerequisite_1 prerequisite_2 ... prerequisite_n
-# [tab] command_1
-# [tab] command_2
+# [tab] recipe_1
+# [tab] recipe_2
 # [tab] ...
-# [tab] command_n
+# [tab] recipe_n
 
 # The `target` is a desired output, such as a file containing a dataset or 
-# report. A target from one recipe can become a prerequisite in another recipe. 
-# For instance, one recipe will generate clean data that is used in a later 
-# report. Those two actions should be accomplished in two recipes.
+# report. A target from one recipe can become a prerequisite in a later recipe. 
+# For instance, one recipe will generate clean data as its target, and that 
+# data is used as a prerequisite in a later report. Those two actions should be 
+# accomplished in two recipes.
 # 
-# `prerequisites` are the data and scripts that generate a target. 
-# Prerequisites for one recipe can include one or many datasets and scripts.
-# The fiest prerequisite is typically the script that utilized the data files 
-# that follow. 
+# `prerequisites` are the script(s) and data that generate a target. 
+# Prerequisites for one recipe can include one or many dscripts and datasets, 
+# but in my workflow, one script per recipe is typical. The first prerequisite 
+# is typically the script utilizing the data prerequistes that follow. 
 # 
-# `commands` are shell commands that coordinate the prerequisites in order to 
+# `recipes` are shell commands that coordinate the prerequisites in order to 
 # create the target. The command section in most of my recipes is one item long, 
-# and executes the first prerequisite, which is usually a script. 
+# and executes the first prerequisite, usually an R script or Rmd file. 
 # 
-#`commands` must be indented with *tabs* and not *spaces*. 
-# If you are working in an RStudio project, go to Tools/Project Options and 
+# `recipes` must be indented with *tabs* and not *spaces*. 
+# If you are working in an RStudio project, go to Tools/Project-Options and 
 # make sure that "Insert Spaces for Tab" is unchecked. If you are not working 
-# in an Rproject, uncheck "Insert Spaces for Tab" from Tools/Global Options.
+# in an Rproject, uncheck "Insert Spaces for Tab" from Tools/Global-Options.
 # 
 # `variables` in GNU Make are created like this ...
 # VARNAME = something useful
@@ -136,15 +137,15 @@ ds_mt_temp.rds
 # $(<D)    the directory part of the first prerequisite 
 # $(<F)    the file part of the first prerequisite 
 
-# Using these automatic variables, you can refer to files that don't yet exist: 
-# For instance in the following recipe I can use $(<F) to refer to  and remove
+# Using these automatic variables, you can even refer to files that don't yet exist: 
+# For instance in the following recipe I can use $(<F) to refer to and remove
 # demo.md, a file that results from knitr::knit() that I have no use for: 
 
 # demo.rds: demo.Rmd raw.rds
 #		Rscript -e "knitr::knit('$<')"
 #		rm $(<F:.Rmd=.md)
 
-# $(<F:.Rmd=.md) will be evaluated as "demo.md" because $(<F) will return the 
-# file name of the first prerequisite, "demo.Rmd", as a string, and ":.Rmd=.md" 
+# $(<F:.Rmd=.md) will be evaluated as "demo.md" because $(<F) will return as a 
+# string the file name of the first prerequisite, "demo.Rmd", and ":.Rmd=.md" 
 # will edit the string "demo.Rmd" to become "demo.md", so that rm $(<F:.Rmd=.md)
-# will be evaluated as "rm demo.md"
+# will be evaluated as "rm demo.md".
