@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r}
-source(here::here("file_paths.R"))
-saveRDS(mtcars, file_ds_mt_agg)
+file_ds_mt_agg <- here::here("ds_mt_agg.rds")
+ds_mt <- mtcars
+saveRDS(ds_mt, file_ds_mt_agg)
 ```

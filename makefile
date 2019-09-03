@@ -13,142 +13,26 @@
 
 # define project subdirectories
 PROJECT = ./
-RAW = ./cloud_makefile_example_for_R/data/raw
-DAT = ./cloud_makefile_example_for_R/data
-MUN = ./munge
-ANL = ./analysis
-REP = ./cloud_makefile_example_for_R/reports
 
 # Search path
-VPATH = $(RAW) $(DAT) $(INT) $(MUN) $(ANL) $(REP) $(PROJECT)
+VPATH = $(PROJECT)
 
-# generate report from Rmd file
-RENDER = Rscript -e "rmarkdown::render('$<')" 
-# generate report from Rmd file and move report to "reports" directory
-RENDER_TO_REPORTS = $(RENDER); mv $(<:.Rmd=.html) $(REP)
-# execute Rmd script without generating report
-SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
 ##############################################################################
 ############################## LIST OF TARGETS ###############################
 ##############################################################################
 
-# Processed data files
-DATA_TARGETS = ds_mtcars.rds ds_mt_agg.rds ds_mt_temp.rds \
-ds_long_name_to_demo_line_breaks.rds
-
-# Reports
-REPORT_TARGETS = my_report.html another_report.html
-
 # Phony Targets are any targets that don't represent single files
-.Phony: all clean clobber
+.Phony: all clean
 
-all: $(DATA_TARGETS) $(REPORT_TARGETS)
+all: ds_mt_agg.rds
 
 clean: 
-	rm -f $(ANL)/*.html
+	rm -f ds_mt_agg.rds
 	
-clobber: 
-	rm -f $(ANL)/*.html $(DAT)/*.rds
-	
-##############################################################################
-################################# MUNGE DATA #################################
-##############################################################################
-ds_mt_raw.csv: 
-
-ds_mtcars.rds: ds_mt_raw.csv
-	
-ds_mt_agg.rds: ds_mt_agg.Rmd 
-	$(SOURCE_RMD_NO_REPORT)
-	
-ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds ds_mt_agg.rds
-
-ds_long_name_to_demo_line_breaks.rds: ds_mtcars.rds
-
-##############################################################################
-################################## ANALYSIS ##################################
-##############################################################################
-
-my_report.html: ds_mtcars.rds
-	
-another_report.html: ds_long_name_to_demo_line_breaks.rds ds_mt_temp.rds
-
-%.csv: %.R
-	Rscript $<
-
-%.rds: %.R
-	Rscript $<
+ds_mt_agg.rds: 
 
 %.rds: %.Rmd 
-	$(SOURCE_RMD_NO_REPORT)
-
-%.html: %.Rmd
-	$(RENDER)
+	Rscript -e 'knitr::knit("$<", output = tempfile())'
 	
-##############################################################################
-################################# APPENDIX ###################################
-##############################################################################
 
-# You can execute this makefile from any computer that has make installed 
-# (i.e., every Mac or Unix machine) simply by changing your working directory 
-# to the directory containing this makefile and typing "make" in the terminal. 
-
-# Makefiles explicitly coordinate file dependencies through `recipes`. 
-
-# Recipes take the form:
-
-# target: prerequisite_1 prerequisite_2 ... prerequisite_n
-# [tab] command_1
-# [tab] command_2
-# [tab] ...
-# [tab] command_n
-
-# The `target` is a desired output, such as a file containing a dataset or 
-# report. A target from one recipe can become a prerequisite in another recipe. 
-# For instance, one recipe will generate clean data that is used in a later 
-# report. Those two actions should be accomplished in two recipes.
-# 
-# `prerequisites` are the data and scripts that generate a target. 
-# Prerequisites for one recipe can include one or many datasets and scripts.
-# The fiest prerequisite is typically the script that utilized the data files 
-# that follow. 
-# 
-# `commands` are shell commands that coordinate the prerequisites in order to 
-# create the target. The command section in most of my recipes is one item long, 
-# and executes the first prerequisite, which is usually a script. 
-# 
-#`commands` must be indented with *tabs* and not *spaces*. 
-# If you are working in an RStudio project, go to Tools/Project Options and 
-# make sure that "Insert Spaces for Tab" is unchecked. If you are not working 
-# in an Rproject, uncheck "Insert Spaces for Tab" from Tools/Global Options.
-# 
-# `variables` in GNU Make are created like this ...
-# VARNAME = something useful
-# ... and `variables` are called like this 
-# $(VARNAME)
-# 
-# The special variable `VPATH` saves the search paths through which make should 
-# search for your target, prerequisite, and command files. 
-
-# `Rscript` will execute an R script
-
-# Useful automatic variables:
-# $@       the name of the target
-# $<       the name of the first prerequisite 
-# $^       the names of all prerequisites of current rule
-# $(@D)    the directory part of the target
-# $(@F)    the file part of the target
-# $(<D)    the directory part of the first prerequisite 
-# $(<F)    the file part of the first prerequisite 
-
-# Using these automatic variables, you can refer to files that don't yet exist: 
-# For instance in the following recipe I can use $(<F) to refer to  and remove
-# demo.md, a file that results from knitr::knit() that I have no use for: 
-
-# demo.rds: demo.Rmd raw.rds
-#		Rscript -e "knitr::knit('$<')"
-#		rm $(<F:.Rmd=.md)
-
-# $(<F:.Rmd=.md) will be evaluated as "demo.md" because $(<F) will return the 
-# file name of the first prerequisite, "demo.Rmd", as a string, and ":.Rmd=.md" 
-# will edit the string "demo.Rmd" to become "demo.md", so that rm $(<F:.Rmd=.md)
-# will be evaluated as "rm demo.md"
+	
