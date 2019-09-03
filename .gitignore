@@ -33,4 +33,5 @@ under_dev/
 *.md
 *.html
 
-data/
+data/*.rds
+reports/*.html

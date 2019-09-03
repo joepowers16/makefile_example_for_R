@@ -12,10 +12,12 @@
 ##############################################################################
 
 # define project subdirectories
-PROJECT = ./
+DIR_PROJECT = ./
+DIR_DATA = ./data
+DIR_RAW = $(DIR_DATA)/raw
 
 # Search path
-VPATH = $(PROJECT)
+VPATH = $(DIR_PROJECT) $(DATA) $(DIR_RAW)
 
 ##############################################################################
 ############################## LIST OF TARGETS ###############################
@@ -24,10 +26,12 @@ VPATH = $(PROJECT)
 # Phony Targets are any targets that don't represent single files
 .Phony: all clean
 
-all: ds_mt.rds ds_mt_agg.rds
+TARGETS_DATA = ds_mt.rds ds_mt_agg.rds
+
+all: $(TARGETS_DATA)
 
 clean: 
-	rm -f ds_mt.rds ds_mt_agg.rds
+	rm -f $(addprefix $(DIR_DATA)/, $(TARGETS_DATA)) 
 	
 ds_mt.rds: 
 
@@ -38,4 +42,6 @@ ds_mt_agg.rds:
 
 %.rds: %.Rmd 
 	Rscript -e 'knitr::knit("$<", output = tempfile())'
+	
+
 	
