@@ -15,10 +15,9 @@
 DIR_PROJECT = ./
 DIR_MUNGE = ./munge
 DIR_ANALYSIS = ./analysis
-DIR_CLOUD = ./cloud_makefile_example_for_R
-DIR_DATA = $(DIR_CLOUD)/data
+DIR_DATA = ./data
 DIR_RAW = $(DIR_DATA)/raw
-DIR_REPORTS = $(DIR_CLOUD)/reports
+DIR_REPORTS = ./reports
 
 # Search path
 VPATH = $(DIR_RAW) $(DIR_DATA) $(DIR_MUNGE) $(DIR_ANALYSIS) $(DIR_REPORTS) $(DIR_PROJECT)

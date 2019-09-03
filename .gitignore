@@ -36,4 +36,5 @@ under_dev/
 # data
 *.rds
 
-cloud_makefile_example_for_R/reference/
+data/*.rds
+reports/*.html
