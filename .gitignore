@@ -32,3 +32,5 @@ under_dev/
 # large files
 *.md
 *.html
+
+data/

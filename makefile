@@ -33,7 +33,7 @@ SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
 ##############################################################################
 
 # Processed data files
-DATA_TARGETS = ds_mt_raw.csv ds_mtcars.rds ds_mt_agg.rds ds_mt_temp.rds \
+DATA_TARGETS = ds_mtcars.rds ds_mt_agg.rds ds_mt_temp.rds \
 ds_long_name_to_demo_line_breaks.rds
 
 # Reports
@@ -45,41 +45,44 @@ REPORT_TARGETS = my_report.html another_report.html
 all: $(DATA_TARGETS) $(REPORT_TARGETS)
 
 clean: 
-	rm -f $(REP)/*.html
+	rm -f $(ANL)/*.html
 	
 clobber: 
-	rm -f $(REP)/*.html $(DAT)/*.rds
+	rm -f $(ANL)/*.html $(DAT)/*.rds
 	
 ##############################################################################
 ################################# MUNGE DATA #################################
 ##############################################################################
+ds_mt_raw.csv: 
 
-ds_mt_raw.csv: ds_mt_raw.R
-	Rscript $<
+ds_mtcars.rds: ds_mt_raw.csv
 	
-ds_mtcars.rds: ds_mtcars.R ds_mt_raw.csv
-	Rscript $<
-
 ds_mt_agg.rds: ds_mt_agg.Rmd 
 	$(SOURCE_RMD_NO_REPORT)
 	
 ds_mt_temp.rds: ds_mt_temp.R ds_mtcars.rds ds_mt_agg.rds
-	Rscript $<
 
-ds_long_name_to_demo_line_breaks.rds: ds_long_name_to_demo_line_breaks.R \
-ds_mtcars.rds
-	Rscript $<
+ds_long_name_to_demo_line_breaks.rds: ds_mtcars.rds
 
 ##############################################################################
 ################################## ANALYSIS ##################################
 ##############################################################################
 
-my_report.html: my_report.Rmd ds_mtcars.rds
-	$(RENDER_TO_REPORTS)
+my_report.html: ds_mtcars.rds
 	
-another_report.html: another_report.Rmd ds_long_name_to_demo_line_breaks.rds \
-ds_mt_temp.rds
-	$(RENDER_TO_REPORTS)
+another_report.html: ds_long_name_to_demo_line_breaks.rds ds_mt_temp.rds
+
+%.csv: %.R
+	Rscript $<
+
+%.rds: %.R
+	Rscript $<
+
+%.rds: %.Rmd 
+	$(SOURCE_RMD_NO_REPORT)
+
+%.html: %.Rmd
+	$(RENDER)
 	
 ##############################################################################
 ################################# APPENDIX ###################################
