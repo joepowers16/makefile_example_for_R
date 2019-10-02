@@ -5,9 +5,16 @@ date: "7/30/2019"
 output: html_document
 ---
 
-```{r}
-library(tidyverse)
+```{r global options, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 4, fig.width = 6,
+  fig.align='center', dpi = 300, 
+  include=TRUE, echo=FALSE, message=FALSE, warning=FALSE
+)
+```
 
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
 source(here::here("file_paths.R"))
 ```
 
