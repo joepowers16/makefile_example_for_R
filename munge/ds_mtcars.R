@@ -5,6 +5,11 @@
 ## Author: JP
 ##############################################################################-
 
+# This line is a technique for suppressing warnings and messages when the script
+# is exectued in make. I'm still weighing its value in terms of decluttering vs.
+# hiding important warnings: 
+suppressWarnings({suppressMessages({
+	
 # Packages, Parameters, & Data ####
 suppressPackageStartupMessages(library(magrittr))
 suppressPackageStartupMessages(library(tidyverse))
@@ -17,8 +22,6 @@ levels_vs <- c("v", "s")
 ds_mtcars <- read_csv(file_ds_mt_raw)
 
 # Munge ####
-glimpse(ds_mtcars)
-
 ds_mtcars %<>% 
   mutate(
     am = factor(am, labels = levels_am), 
@@ -26,3 +29,5 @@ ds_mtcars %<>%
   )
 
 write_rds(ds_mtcars, file_ds_mtcars)
+
+})})
