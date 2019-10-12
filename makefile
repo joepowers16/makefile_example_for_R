@@ -19,10 +19,8 @@ DIR_DATA = ./data
 DIR_RAW = $(DIR_DATA)/raw
 DIR_REPORTS = ./reports
 
-# Search path
-VPATH = $(DIR_RAW) $(DIR_DATA) $(DIR_MUNGE) $(DIR_ANALYSIS) $(DIR_REPORTS) \
-$(DIR_PROJECT)
-
+# Recursively search all subdirectories of the project for prerequisites
+VPATH = $(shell find . -type d)
 # generate html report from Rmd file
 RENDER = Rscript -e "rmarkdown::render('$<')" 
 # generate html report from Rmd file and move it to "reports" directory
