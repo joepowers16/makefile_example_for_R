@@ -1,6 +1,6 @@
 ##############################################################################-
-## Project: Make File Example
-## Script purpose: Makefile
+## Project: Makefile Example
+## Script purpose: Makefile for mtcars data munge and analysis
 ## Date: 2019-07-29
 ## Author: Joe Powers 
 ## NOTE: If you're new to makefiles, please see APPENDIX at end of document and
@@ -82,10 +82,12 @@ ds_mt_temp.rds
 ################################# APPENDIX ###################################
 ##############################################################################
 
-# You can execute this makefile from any computer that has make installed 
-# (i.e., every Mac or Unix machine) simply by typing "make" in the terminal
-# when your working directory is set to this directory. 
+# To reproduce this data project in its entirety: 
+# Navigate your terminal to the directory containing this file. Then type "make" 
+# in the terminal to execute this makefile from any computer that has 
+# make installed (i.e., every Mac or Unix machine). 
 
+# An overview of Makefiles: 
 # Makefiles explicitly coordinate file dependencies through `rules`. 
 
 # Rules take the form:
